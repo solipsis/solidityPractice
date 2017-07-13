@@ -30,17 +30,17 @@ func main() {
 	}
 	fmt.Println("auth succesful: ", auth)
 
-	address, tx, token, err := DeploySpawn(auth, conn)
+	address, tx, spawner, err := DeploySpawn(auth, conn)
 	if err != nil {
 		log.Fatalf("Failed to deploy new contract %v", err)
 	}
 	fmt.Printf("Contract pending deploy 0x%x\n\n", address)
 	fmt.Printf("Transaction waiting to be mined: 0x%x\n\n", tx.Hash())
-	fmt.Print("token: ", token)
-	time.Sleep(4000 * time.Millisecond)
+	fmt.Println("spawner: ", spawner)
+	waitForBlock()
 
 	session := &SpawnSession{
-		Contract: token,
+		Contract: spawner,
 		CallOpts: bind.CallOpts{
 			Pending: true,
 		},
@@ -51,25 +51,43 @@ func main() {
 		},
 	}
 
-	// sub, err := token.SubAddress(&bind.CallOpts{})
-	sub, err := session.SubAddress()
+	session.newIssue("CoolName", 5000)
+	waitForBlock()
+	session.newIssue("Issue222", 1984)
+	waitForBlock()
+
+	printIssues(session)
+
+}
+
+func waitForBlock() {
+	time.Sleep(5000 * time.Millisecond)
+}
+
+func (session *SpawnSession) newIssue(name string, threshold int64) {
+	issue, err := session.CreateIssue(name, big.NewInt(threshold))
 	if err != nil {
-		log.Fatalf("Failed to retrieve subaddress: %v", err)
+		log.Fatalf("failed to make sub transfer :name:%V %v", name, err)
 	}
+	fmt.Println("Issue:", issue)
+}
 
-	fmt.Println("subaddress:", sub)
-
-	//	trans, err := token.CreateTransfer(&bind.TransactOpts{})
-	trans, err := session.CreateTransfer()
+func printIssues(session *SpawnSession) {
+	fmt.Println("Printing issues")
+	size, err := session.Size()
 	if err != nil {
-		log.Fatalf("failed to make sub transfer %v", err)
+		log.Fatalf("Failed to retrieve index: %v", err)
 	}
-
-	time.Sleep(4000 * time.Millisecond)
-	fmt.Println("trans:", trans)
-	fmt.Println("sub", sub)
-
-	sub, err = session.SubAddress()
-	fmt.Println("final Sub:", sub)
-
+	fmt.Println("Size: ", size)
+	for i := int64(0); i < size.Int64(); i++ {
+		addr, err := session.AddressLUT(big.NewInt(i))
+		if err != nil {
+			log.Fatalf("Failed to retrieve address: %v", err)
+		}
+		issue, err := session.Issues(addr)
+		if err != nil {
+			log.Fatalf("Failed to retrieve issue from address: %v", err)
+		}
+		fmt.Printf("Name: %v Threshold: %v Index: %v", issue.Name, issue.Threshold, i)
+	}
 }

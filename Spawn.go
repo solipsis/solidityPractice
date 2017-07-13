@@ -14,10 +14,10 @@ import (
 )
 
 // SpawnABI is the input ABI used to generate the binding from.
-const SpawnABI = "[{\"constant\":false,\"inputs\":[],\"name\":\"createTransfer\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"subAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"type\":\"function\"},{\"payable\":true,\"type\":\"fallback\"}]"
+const SpawnABI = "[{\"constant\":false,\"inputs\":[{\"name\":\"name\",\"type\":\"string\"},{\"name\":\"threshold\",\"type\":\"uint256\"}],\"name\":\"createIssue\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"size\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"addressLUT\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"}],\"name\":\"issues\",\"outputs\":[{\"name\":\"threshold\",\"type\":\"uint256\"},{\"name\":\"name\",\"type\":\"string\"}],\"payable\":false,\"type\":\"function\"},{\"payable\":true,\"type\":\"fallback\"}]"
 
 // SpawnBin is the compiled bytecode used for deploying new contracts.
-const SpawnBin = `0x6060604052341561000c57fe5b5b6103258061001c6000396000f300606060405236156100495763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166301ac552d8114610052578063e58ad4531461008b575b6100505b5b565b005b341561005a57fe5b6100626100c4565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b341561009357fe5b61006261012a565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60006113886100d1610146565b90815260405190819003602001906000f08015156100eb57fe5b6000805473ffffffffffffffffffffffffffffffffffffffff191673ffffffffffffffffffffffffffffffffffffffff92831617908190551690505b90565b60005473ffffffffffffffffffffffffffffffffffffffff1681565b6040516101a3806101578339019056006060604052341561000c57fe5b6040516020806101a383398101604052515b60018054600160a060020a03191633600160a060020a031617905560008190555b505b610153806100506000396000f300606060405236156100495763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166342cde4e881146100aa5780638da5cb5b146100cc575b6100a85b60005473ffffffffffffffffffffffffffffffffffffffff301631106100a55760015460405173ffffffffffffffffffffffffffffffffffffffff9182169130163180156108fc02916000818181858888f150505050505b5b565b005b34156100b257fe5b6100ba610105565b60408051918252519081900360200190f35b34156100d457fe5b6100dc61010b565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005481565b60015473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058205c62777a2bfc6020600c2359e10af906dd024ba520979257d5be70350a8a05720029a165627a7a72305820dd24a301572c06800c2cfa0dabee3b83aea6ab03fa331653e8db31e94f8649b40029`
+const SpawnBin = `0x6060604052341561000c57fe5b5b61058f8061001c6000396000f3006060604052361561005f5763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416638615d8558114610068578063949d225d146100dc578063aca49018146100fe578063e9a5551c1461012d575b6100665b5b565b005b341561007057fe5b6100c0600480803590602001908201803590602001908080601f0160208091040260200160405190810160405280939291908181526020018383808284375094965050933593506101d892505050565b60408051600160a060020a039092168252519081900360200190f35b34156100e457fe5b6100ec610296565b60408051918252519081900360200190f35b341561010657fe5b6100c060043561029d565b60408051600160a060020a039092168252519081900360200190f35b341561013557fe5b610149600160a060020a03600435166102cf565b604080518381526020810182815283546002600019610100600184161502019091160492820183905290916060830190849080156101c85780601f1061019d576101008083540402835291602001916101c8565b820191906000526020600020905b8154815290600101906020018083116101ab57829003601f168201915b5050935050505060405180910390f35b600060006113886101e76102e6565b90815260405190819003602001906000f080151561020157fe5b600160a060020a0381166000908152602081815260409091208651929350610231926001909101918701906102f6565b50600160a060020a03811660009081526020819052604090208390556001805480820161025e8382610375565b916000526020600020900160005b8154600160a060020a038086166101009390930a92830292021916179055509050805b5092915050565b6001545b90565b60018054829081106102ab57fe5b906000526020600020900160005b915054906101000a9004600160a060020a031681565b600060208190529081526040902080549060010182565b6040516101a3806103c183390190565b828054600181600116156101000203166002900490600052602060002090601f016020900481019282601f1061033757805160ff1916838001178555610364565b82800160010185558215610364579182015b82811115610364578251825591602001919060010190610349565b5b5061037192915061039f565b5090565b8154818355818115116103995760008381526020902061039991810190830161039f565b5b505050565b61029a91905b8082111561037157600081556001016103a5565b5090565b9056006060604052341561000c57fe5b6040516020806101a383398101604052515b60018054600160a060020a03191633600160a060020a031617905560008190555b505b610153806100506000396000f300606060405236156100495763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166342cde4e881146100aa5780638da5cb5b146100cc575b6100a85b60005473ffffffffffffffffffffffffffffffffffffffff301631106100a55760015460405173ffffffffffffffffffffffffffffffffffffffff9182169130163180156108fc02916000818181858888f150505050505b5b565b005b34156100b257fe5b6100ba610105565b60408051918252519081900360200190f35b34156100d457fe5b6100dc61010b565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005481565b60015473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a7230582013a72c852ac062f89a1ba14038ddfc4e7ab182c019b8c08ef4efc1c0c7a6a3940029a165627a7a72305820b608d0285f273672a22ad714462451989a69b4728056226344227d2d9c8fda350029`
 
 // DeploySpawn deploys a new Ethereum contract, binding an instance of Spawn to it.
 func DeploySpawn(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *Spawn, error) {
@@ -159,58 +159,120 @@ func (_Spawn *SpawnTransactorRaw) Transact(opts *bind.TransactOpts, method strin
 	return _Spawn.Contract.contract.Transact(opts, method, params...)
 }
 
-// SubAddress is a free data retrieval call binding the contract method 0xe58ad453.
+// AddressLUT is a free data retrieval call binding the contract method 0xaca49018.
 //
-// Solidity: function subAddress() constant returns(address)
-func (_Spawn *SpawnCaller) SubAddress(opts *bind.CallOpts) (common.Address, error) {
+// Solidity: function addressLUT( uint256) constant returns(address)
+func (_Spawn *SpawnCaller) AddressLUT(opts *bind.CallOpts, arg0 *big.Int) (common.Address, error) {
 	var (
 		ret0 = new(common.Address)
 	)
 	out := ret0
-	err := _Spawn.contract.Call(opts, out, "subAddress")
+	err := _Spawn.contract.Call(opts, out, "addressLUT", arg0)
 	return *ret0, err
 }
 
-// SubAddress is a free data retrieval call binding the contract method 0xe58ad453.
+// AddressLUT is a free data retrieval call binding the contract method 0xaca49018.
 //
-// Solidity: function subAddress() constant returns(address)
-func (_Spawn *SpawnSession) SubAddress() (common.Address, error) {
-	return _Spawn.Contract.SubAddress(&_Spawn.CallOpts)
+// Solidity: function addressLUT( uint256) constant returns(address)
+func (_Spawn *SpawnSession) AddressLUT(arg0 *big.Int) (common.Address, error) {
+	return _Spawn.Contract.AddressLUT(&_Spawn.CallOpts, arg0)
 }
 
-// SubAddress is a free data retrieval call binding the contract method 0xe58ad453.
+// AddressLUT is a free data retrieval call binding the contract method 0xaca49018.
 //
-// Solidity: function subAddress() constant returns(address)
-func (_Spawn *SpawnCallerSession) SubAddress() (common.Address, error) {
-	return _Spawn.Contract.SubAddress(&_Spawn.CallOpts)
+// Solidity: function addressLUT( uint256) constant returns(address)
+func (_Spawn *SpawnCallerSession) AddressLUT(arg0 *big.Int) (common.Address, error) {
+	return _Spawn.Contract.AddressLUT(&_Spawn.CallOpts, arg0)
 }
 
-// CreateTransfer is a paid mutator transaction binding the contract method 0x01ac552d.
+// Issues is a free data retrieval call binding the contract method 0xe9a5551c.
 //
-// Solidity: function createTransfer() returns(address)
-func (_Spawn *SpawnTransactor) CreateTransfer(opts *bind.TransactOpts) (*types.Transaction, error) {
-	return _Spawn.contract.Transact(opts, "createTransfer")
+// Solidity: function issues( address) constant returns(threshold uint256, name string)
+func (_Spawn *SpawnCaller) Issues(opts *bind.CallOpts, arg0 common.Address) (struct {
+	Threshold *big.Int
+	Name      string
+}, error) {
+	ret := new(struct {
+		Threshold *big.Int
+		Name      string
+	})
+	out := ret
+	err := _Spawn.contract.Call(opts, out, "issues", arg0)
+	return *ret, err
 }
 
-// CreateTransfer is a paid mutator transaction binding the contract method 0x01ac552d.
+// Issues is a free data retrieval call binding the contract method 0xe9a5551c.
 //
-// Solidity: function createTransfer() returns(address)
-func (_Spawn *SpawnSession) CreateTransfer() (*types.Transaction, error) {
-	return _Spawn.Contract.CreateTransfer(&_Spawn.TransactOpts)
+// Solidity: function issues( address) constant returns(threshold uint256, name string)
+func (_Spawn *SpawnSession) Issues(arg0 common.Address) (struct {
+	Threshold *big.Int
+	Name      string
+}, error) {
+	return _Spawn.Contract.Issues(&_Spawn.CallOpts, arg0)
 }
 
-// CreateTransfer is a paid mutator transaction binding the contract method 0x01ac552d.
+// Issues is a free data retrieval call binding the contract method 0xe9a5551c.
 //
-// Solidity: function createTransfer() returns(address)
-func (_Spawn *SpawnTransactorSession) CreateTransfer() (*types.Transaction, error) {
-	return _Spawn.Contract.CreateTransfer(&_Spawn.TransactOpts)
+// Solidity: function issues( address) constant returns(threshold uint256, name string)
+func (_Spawn *SpawnCallerSession) Issues(arg0 common.Address) (struct {
+	Threshold *big.Int
+	Name      string
+}, error) {
+	return _Spawn.Contract.Issues(&_Spawn.CallOpts, arg0)
+}
+
+// Size is a free data retrieval call binding the contract method 0x949d225d.
+//
+// Solidity: function size() constant returns(uint256)
+func (_Spawn *SpawnCaller) Size(opts *bind.CallOpts) (*big.Int, error) {
+	var (
+		ret0 = new(*big.Int)
+	)
+	out := ret0
+	err := _Spawn.contract.Call(opts, out, "size")
+	return *ret0, err
+}
+
+// Size is a free data retrieval call binding the contract method 0x949d225d.
+//
+// Solidity: function size() constant returns(uint256)
+func (_Spawn *SpawnSession) Size() (*big.Int, error) {
+	return _Spawn.Contract.Size(&_Spawn.CallOpts)
+}
+
+// Size is a free data retrieval call binding the contract method 0x949d225d.
+//
+// Solidity: function size() constant returns(uint256)
+func (_Spawn *SpawnCallerSession) Size() (*big.Int, error) {
+	return _Spawn.Contract.Size(&_Spawn.CallOpts)
+}
+
+// CreateIssue is a paid mutator transaction binding the contract method 0x8615d855.
+//
+// Solidity: function createIssue(name string, threshold uint256) returns(address)
+func (_Spawn *SpawnTransactor) CreateIssue(opts *bind.TransactOpts, name string, threshold *big.Int) (*types.Transaction, error) {
+	return _Spawn.contract.Transact(opts, "createIssue", name, threshold)
+}
+
+// CreateIssue is a paid mutator transaction binding the contract method 0x8615d855.
+//
+// Solidity: function createIssue(name string, threshold uint256) returns(address)
+func (_Spawn *SpawnSession) CreateIssue(name string, threshold *big.Int) (*types.Transaction, error) {
+	return _Spawn.Contract.CreateIssue(&_Spawn.TransactOpts, name, threshold)
+}
+
+// CreateIssue is a paid mutator transaction binding the contract method 0x8615d855.
+//
+// Solidity: function createIssue(name string, threshold uint256) returns(address)
+func (_Spawn *SpawnTransactorSession) CreateIssue(name string, threshold *big.Int) (*types.Transaction, error) {
+	return _Spawn.Contract.CreateIssue(&_Spawn.TransactOpts, name, threshold)
 }
 
 // TransferABI is the input ABI used to generate the binding from.
 const TransferABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"threshold\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"owner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"type\":\"function\"},{\"inputs\":[{\"name\":\"_threshold\",\"type\":\"uint256\"}],\"payable\":false,\"type\":\"constructor\"},{\"payable\":true,\"type\":\"fallback\"}]"
 
 // TransferBin is the compiled bytecode used for deploying new contracts.
-const TransferBin = `0x6060604052341561000c57fe5b6040516020806101a383398101604052515b60018054600160a060020a03191633600160a060020a031617905560008190555b505b610153806100506000396000f300606060405236156100495763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166342cde4e881146100aa5780638da5cb5b146100cc575b6100a85b60005473ffffffffffffffffffffffffffffffffffffffff301631106100a55760015460405173ffffffffffffffffffffffffffffffffffffffff9182169130163180156108fc02916000818181858888f150505050505b5b565b005b34156100b257fe5b6100ba610105565b60408051918252519081900360200190f35b34156100d457fe5b6100dc61010b565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005481565b60015473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a723058205c62777a2bfc6020600c2359e10af906dd024ba520979257d5be70350a8a05720029`
+const TransferBin = `0x6060604052341561000c57fe5b6040516020806101a383398101604052515b60018054600160a060020a03191633600160a060020a031617905560008190555b505b610153806100506000396000f300606060405236156100495763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166342cde4e881146100aa5780638da5cb5b146100cc575b6100a85b60005473ffffffffffffffffffffffffffffffffffffffff301631106100a55760015460405173ffffffffffffffffffffffffffffffffffffffff9182169130163180156108fc02916000818181858888f150505050505b5b565b005b34156100b257fe5b6100ba610105565b60408051918252519081900360200190f35b34156100d457fe5b6100dc61010b565b6040805173ffffffffffffffffffffffffffffffffffffffff9092168252519081900360200190f35b60005481565b60015473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a7230582013a72c852ac062f89a1ba14038ddfc4e7ab182c019b8c08ef4efc1c0c7a6a3940029`
 
 // DeployTransfer deploys a new Ethereum contract, binding an instance of Transfer to it.
 func DeployTransfer(auth *bind.TransactOpts, backend bind.ContractBackend, _threshold *big.Int) (common.Address, *types.Transaction, *Transfer, error) {

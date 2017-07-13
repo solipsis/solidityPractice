@@ -18,11 +18,25 @@ contract Transfer {
 
 contract Spawn {
 
-    address public subAddress;
+    struct Issue {
+        uint threshold;
+        string name;
+    }
 
-    function createTransfer() returns (address) {
-        subAddress = new Transfer(5000);
+    mapping(address => Issue) public issues;
+    address[] public addressLUT; 
+
+    function createIssue(string name, uint threshold) returns (address) {
+        address subAddress = new Transfer(threshold);
+
+        issues[subAddress].name = name;
+        issues[subAddress].threshold = threshold;
+        addressLUT.push(subAddress);
         return subAddress;
+    }
+
+    function size() constant returns (uint) {
+        return addressLUT.length;
     }
 
     function() payable {
